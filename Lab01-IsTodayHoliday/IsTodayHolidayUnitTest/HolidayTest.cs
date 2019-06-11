@@ -6,37 +6,38 @@ namespace IsTodayHolidayUnitTest
 {
     public class HolidayTest
     {
+        private HolidayForTest _holidayForTest;
+
         [SetUp]
         public void Setup()
         {
+            _holidayForTest = new HolidayForTest();
         }
 
         [Test]
         public void GetThemeTest_Today_Is_Not_Dragon_Boat_Festival()
         {
-            //Arrange
-            var holiday = new HolidayForTest();
-            holiday.SetToday( new DateTime( 2019 , 06 , 06 ) );
+            GivenToday( 2019 , 06 , 06 );
 
-            //Action
-            string actual = holiday.GetTheme();
-
-            //Assert
-            Assert.AreEqual( "theme.normal" , actual );
+            ShouldReturnTheme( "theme.normal" );
         }
 
         [Test]
         public void GetThemeTest_Today_Is_Dragon_Boat_Festival()
         {
-            //Arrange
-            var holiday = new HolidayForTest();
-            holiday.SetToday( new DateTime( 2019 , 06 , 07 ) );
+            GivenToday( 2019 , 06 , 07 );
 
-            //Action
-            string actual = holiday.GetTheme();
+            ShouldReturnTheme( "theme.dragon-boat-festival" );
+        }
 
-            //Assert
-            Assert.AreEqual( "theme.dragon-boat-festival" , actual );
+        private void ShouldReturnTheme( string theme )
+        {
+            Assert.AreEqual( theme , _holidayForTest.GetTheme() );
+        }
+
+        private void GivenToday( int year , int month , int day )
+        {
+            _holidayForTest.SetToday( new DateTime( year , month , day ) );
         }
     }
 
