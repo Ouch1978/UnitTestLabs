@@ -15,7 +15,8 @@ namespace IsTodayHolidayUnitTest
         public void GetThemeTest_Today_Is_Not_Dragon_Boat_Festival()
         {
             //Arrange
-            Holiday holiday = new Holiday( new DateTime( 2019 , 06 , 06 ) );
+            var holiday = new HolidayForTest();
+            holiday.SetToday( new DateTime( 2019 , 06 , 06 ) );
 
             //Action
             string actual = holiday.GetTheme();
@@ -28,7 +29,8 @@ namespace IsTodayHolidayUnitTest
         public void GetThemeTest_Today_Is_Dragon_Boat_Festival()
         {
             //Arrange
-            Holiday holiday = new Holiday(new DateTime( 2019 , 06 , 07 ));
+            var holiday = new HolidayForTest();
+            holiday.SetToday( new DateTime( 2019 , 06 , 07 ) );
 
             //Action
             string actual = holiday.GetTheme();
@@ -36,6 +38,20 @@ namespace IsTodayHolidayUnitTest
             //Assert
             Assert.AreEqual( "theme.dragon-boat-festival" , actual );
         }
+    }
 
+    public class HolidayForTest : Holiday
+    {
+        private DateTime _today;
+
+        protected override DateTime GetToday()
+        {
+            return _today;
+        }
+
+        public void SetToday( DateTime today )
+        {
+            _today = today;
+        }
     }
 }
